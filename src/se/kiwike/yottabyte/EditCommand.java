@@ -163,7 +163,7 @@ public class EditCommand implements CommandExecutor{
 				return true;
 			}
 
-			long time = plugin.parseTimeSpec(args[2], args[3]);
+			long time = plugin.parseTimeSpec(args);
 			if(time == 0){
 				sender.sendMessage(ChatColor.RED + "Invalid time format");
 				return true;
