@@ -150,8 +150,46 @@ public class KiwiAdmin extends JavaPlugin {
 		return builder.toString();
 	}
 
-	public long parseTimeSpec(String time, String unit) {
+	public long parseTimeSpec(String... args) {
+		String unit = "";
+		String time = "";
 		long sec;
+		
+		if (args.length == 2) {
+			time = args[0];
+			unit = args[1];
+		} else if (args.length == 1) {
+			String str = args[1];
+			
+			if (str.endsWith("h")) {
+				time = str.replace("h", "");
+				unit = "hour";	
+			} else if (str.endsWith("d")) {
+				time = str.replace("d", "");
+				unit = "day";	
+			} else if (str.endsWith("w")) {
+				time = str.replace("w", "");
+				unit = "week";	
+			} else if (str.endsWith("m")) {
+				time = str.replace("m", "");
+				unit = "month";	
+			} else if (str.endsWith("min")) {
+				time = str.replace("min", "");
+				unit = "min";	
+			} else if (str.endsWith("sec")) {
+				time = str.replace("sec", "");
+				unit = "sec";	
+			} else {
+				// the user dun goofed
+				return 0;
+			}
+			
+		} else {
+			// err... the user dun goofed
+			return 0;
+		}
+		
+		
 		try {
 			sec = Integer.parseInt(time)*60;
 		} catch (NumberFormatException ex) {
@@ -476,7 +514,7 @@ public class KiwiAdmin extends JavaPlugin {
 			return true;
 		}
 
-		long tempTime = parseTimeSpec(args[1],args[2]); //parse the time and do other crap below
+		long tempTime = parseTimeSpec(args); //parse the time and do other crap below
 		if(tempTime == 0)
 			return false;
 		bannedPlayers.add(p.toLowerCase()); // Add name to RAM
